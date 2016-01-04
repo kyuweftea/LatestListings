@@ -9,7 +9,7 @@ This file must contain a string resource with the name "themoviedbAPIKEY". Examp
 
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="themoviedbAPIKEY">myAPIKEY</string>
+    <string name="TMDbAPIKEY">myAPIKEY</string>
 </resources>
 
 
