@@ -6,12 +6,12 @@ app/src/main/res/values/secrets.xml
 
 This file must contain a string resource with the name "TMDbAPIKEY". Example contents:
 
-
+/*
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="TMDbAPIKEY">myAPIKEY</string>
 </resources>
-
+*/
 
 Get your own API key by creating an account at themoviedb.org and requesting one.
 
