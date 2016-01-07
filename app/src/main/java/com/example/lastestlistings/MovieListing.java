@@ -1,9 +1,18 @@
 package com.example.lastestlistings;
 
+import java.io.Serializable;
+
 /**
  * Created by Philip on 16-01-04.
  */
-public class MovieListing {
+public class MovieListing implements Serializable {
+
+    public static final String resultsKEY = "results";
+    public static final String titleKEY = "title";
+    public static final String posterPathKEY = "poster_path";
+    public static final String plotSynopsisKEY = "overview";
+    public static final String userRatingKEY = "vote_average";
+    public static final String releaseDateKEY = "release_date";
 
     private String title;
     private String posterPath;

@@ -1,6 +1,7 @@
 package com.example.lastestlistings;
 
 import android.content.res.Resources;
+import android.graphics.Movie;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,6 +30,8 @@ import java.util.ArrayList;
  */
 public class DiscoveryActivityFragment extends Fragment {
 
+    private DiscoveryListAdapter mDiscoveryListAdapter;
+
     public DiscoveryActivityFragment() {
     }
 
@@ -36,7 +40,14 @@ public class DiscoveryActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_discovery, container, false);
 
+        mDiscoveryListAdapter = new DiscoveryListAdapter(
+                getActivity(),
+                R.layout.item_movie_discovery,
+                new ArrayList<MovieListing>()
+        );
 
+        GridView discoveryItems = (GridView) rootView.findViewById(R.id.discovery_items);
+        discoveryItems.setAdapter(mDiscoveryListAdapter);
 
         return rootView;
     }
@@ -51,18 +62,23 @@ public class DiscoveryActivityFragment extends Fragment {
         updateMovieList();
     }
 
-    public class FetchMovieListTask extends AsyncTask<String, Void, ArrayList<MovieListing>> {
+    public class FetchMovieListTask extends AsyncTask<String, Void, MovieListing[]> {
 
         private final String LOG_TAG = FetchMovieListTask.class.getSimpleName();
 
         @Override
-        protected void onPostExecute(ArrayList<MovieListing> movieListings) {
-            //Toast.makeText(getActivity(), "task finished", Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(MovieListing[] movieListings) {
+            if (movieListings != null) {
+                mDiscoveryListAdapter.clear();
+                for (MovieListing movieListing : movieListings) {
+                    mDiscoveryListAdapter.add(movieListing);
+                }
+            }
             super.onPostExecute(movieListings);
         }
 
         @Override
-        protected ArrayList<MovieListing> doInBackground(String... params) {
+        protected MovieListing[] doInBackground(String... params) {
 
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
@@ -127,33 +143,28 @@ public class DiscoveryActivityFragment extends Fragment {
             }
         }
 
-        private ArrayList<MovieListing> getMovieDataFromJson(String movieJsonStr)
+        private MovieListing[] getMovieDataFromJson(String movieJsonStr)
                 throws JSONException {
 
             ArrayList<MovieListing> movieData = new ArrayList<>();
 
-            final String resultsKEY = "results";
-            final String titleKEY = "title";
-            final String posterPathKEY = "poster_path";
-            final String plotSynopsisKEY = "overview";
-            final String userRatingKEY = "vote_average";
-            final String releaseDateKEY = "release_date";
-
             JSONObject movieListingJSON = new JSONObject(movieJsonStr);
-            JSONArray results = movieListingJSON.getJSONArray(resultsKEY);
+            JSONArray results = movieListingJSON.getJSONArray(MovieListing.resultsKEY);
 
             for (int i = 0; i < results.length(); i ++) {
                 JSONObject result = results.getJSONObject(i);
                 movieData.add(new MovieListing(
-                        result.getString(titleKEY),
-                        result.getString(posterPathKEY),
-                        result.getString(plotSynopsisKEY),
-                        result.getDouble(userRatingKEY),
-                        result.getString(releaseDateKEY)
+                        result.getString(MovieListing.titleKEY),
+                        result.getString(MovieListing.posterPathKEY),
+                        result.getString(MovieListing.plotSynopsisKEY),
+                        result.getDouble(MovieListing.userRatingKEY),
+                        result.getString(MovieListing.releaseDateKEY)
                 ));
             }
 
-            return movieData;
+            MovieListing[] movieDataReturn = new MovieListing[movieData.size()];
+            movieDataReturn = movieData.toArray(movieDataReturn);
+            return movieDataReturn;
         }
     }
 }
