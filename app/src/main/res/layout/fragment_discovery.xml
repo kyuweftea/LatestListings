@@ -9,6 +9,7 @@
     <GridView android:id="@+id/discovery_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:columnWidth="100dp"
         android:numColumns="auto_fit" />
 
 </FrameLayout>
