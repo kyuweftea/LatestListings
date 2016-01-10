@@ -64,7 +64,7 @@ public class DiscoveryActivityFragment extends Fragment {
     }
 
     private void updateMovieList() {
-        new FetchMovieListTask().execute("testing123");
+        new FetchMovieListTask().execute("popularity.desc");
     }
 
     @Override
@@ -100,6 +100,8 @@ public class DiscoveryActivityFragment extends Fragment {
                     return null;
                 }
 
+                String sortParam = params[0];
+
                 URL url = new URL(
                         new Uri.Builder()
                                 .scheme("https")
@@ -108,6 +110,7 @@ public class DiscoveryActivityFragment extends Fragment {
                                 .appendPath("discover")
                                 .appendPath("movie")
                                 .appendQueryParameter("api_key", getResources().getString(R.string.TMDbAPIKEY))
+                                .appendQueryParameter("sort_by", sortParam)
                                 .toString()
                 );
 
