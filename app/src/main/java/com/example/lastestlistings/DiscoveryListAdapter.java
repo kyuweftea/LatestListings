@@ -2,6 +2,7 @@ package com.example.lastestlistings;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -46,7 +49,17 @@ public class DiscoveryListAdapter extends ArrayAdapter<MovieListing> {
 
         MovieListing movieListing = data.get(position);
         String posterPath = movieListing.getPosterPath();
-        Picasso.with(context).load("http://image.tmdb.org/t/p/w185/" + posterPath).into(imageView);
+
+        Uri imageURL = new Uri.Builder()
+                .scheme("http")
+                .authority("image.tmdb.org")
+                .appendPath("t")
+                .appendPath("p")
+                .appendPath("w185")
+                .appendEncodedPath(posterPath)
+                .build();
+
+        Picasso.with(context).load(imageURL).into(imageView);
 
         return frame;
     }
