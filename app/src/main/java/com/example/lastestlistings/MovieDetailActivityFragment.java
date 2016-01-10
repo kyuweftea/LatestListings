@@ -35,7 +35,7 @@ public class MovieDetailActivityFragment extends Fragment {
                     .authority("image.tmdb.org")
                     .appendPath("t")
                     .appendPath("p")
-                    .appendPath("w780")
+                    .appendPath("w500")
                     .appendEncodedPath(movieListing.getPosterPath())
                     .build();
 

@@ -1,10 +1,12 @@
 package com.example.lastestlistings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Movie;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,7 +66,14 @@ public class DiscoveryActivityFragment extends Fragment {
     }
 
     private void updateMovieList() {
-        new FetchMovieListTask().execute("popularity.desc");
+        FetchMovieListTask task = new FetchMovieListTask();
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        String sortMethod = preferences.getString(
+                getString(R.string.pref_sort_key),
+                getString(R.string.pref_sort_popularity)
+        );
+        task.execute(sortMethod);
     }
 
     @Override
