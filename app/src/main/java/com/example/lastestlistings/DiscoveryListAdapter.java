@@ -48,8 +48,6 @@ public class DiscoveryListAdapter extends ArrayAdapter<MovieListing> {
         String posterPath = movieListing.getPosterPath();
         Picasso.with(context).load("http://image.tmdb.org/t/p/w185/" + posterPath).into(imageView);
 
-        Log.v(DiscoveryListAdapter.class.getSimpleName(), "%%%%%%%%%%%%%%%%%%% loading http://image.tmdb.org/t/p/w185/" + posterPath);
-
         return frame;
     }
 }

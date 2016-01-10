@@ -32,6 +32,9 @@ public class DiscoveryActivityFragment extends Fragment {
 
     private DiscoveryListAdapter mDiscoveryListAdapter;
 
+    private final int poster_width = 185;
+    private final int poster_height = 278;
+
     public DiscoveryActivityFragment() {
     }
 
