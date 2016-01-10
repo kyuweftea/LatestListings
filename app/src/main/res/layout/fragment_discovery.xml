@@ -8,8 +8,7 @@
         android:layout_height="fill_parent"
         android:stretchMode="columnWidth"
         android:numColumns="auto_fit"
-        android:columnWidth="120dp"
-        android:gravity="center"
+        android:columnWidth="@dimen/min_discovery_poster_width"
         />
 
 </FrameLayout>
