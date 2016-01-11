@@ -1,6 +1,10 @@
 package com.example.lastestlistings;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
+import android.media.Image;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,7 +36,16 @@ public class MovieDetailActivityFragment extends Fragment {
             MovieListing movieListing = (MovieListing) intent
                     .getSerializableExtra(MovieDetailActivity.movieListingKEY);
 
-            Uri imageURL = new Uri.Builder()
+            final Uri imageURLsmall = new Uri.Builder()
+                    .scheme("http")
+                    .authority("image.tmdb.org")
+                    .appendPath("t")
+                    .appendPath("p")
+                    .appendPath("w185")
+                    .appendEncodedPath(movieListing.getPosterPath())
+                    .build();
+
+            final Uri imageURL = new Uri.Builder()
                     .scheme("http")
                     .authority("image.tmdb.org")
                     .appendPath("t")
@@ -39,7 +54,24 @@ public class MovieDetailActivityFragment extends Fragment {
                     .appendEncodedPath(movieListing.getPosterPath())
                     .build();
 
-            Picasso.with(getActivity()).load(imageURL).into((ImageView) rootView.findViewById(R.id.poster));
+            final Context context = getActivity();
+            final ImageView imageView = (ImageView) rootView.findViewById(R.id.poster);
+
+            Picasso.with(context)
+                    .load(imageURLsmall) // thumbnail url goes here
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Picasso.with(context)
+                                    .load(imageURL) // image url goes here
+                                    .placeholder(imageView.getDrawable())
+                                    .into(imageView);
+                        }
+
+                        @Override
+                        public void onError() {
+                        }
+                    });
 
             ((TextView) rootView.findViewById(R.id.title))
                     .setText(movieListing.getTitle());
