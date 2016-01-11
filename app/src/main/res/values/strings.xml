@@ -13,7 +13,7 @@
     <string name="pref_sort_popularity" translatable="false">popularity.desc</string>
     <string name="pref_sort_rating" translatable="false">vote_average.desc</string>
 
-    <string name="pref_sort_label_popularity">Popularity</string>
-    <string name="pref_sort_label_rating">Top rated</string>
+    <string name="pref_sort_label_popularity">Most popular</string>
+    <string name="pref_sort_label_rating">Highest rated</string>
 
 </resources>
