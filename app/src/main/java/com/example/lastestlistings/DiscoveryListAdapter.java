@@ -48,16 +48,7 @@ public class DiscoveryListAdapter extends ArrayAdapter<MovieListing> {
         }
 
         MovieListing movieListing = data.get(position);
-        String posterPath = movieListing.getPosterPath();
-
-        Uri imageURL = new Uri.Builder()
-                .scheme("http")
-                .authority("image.tmdb.org")
-                .appendPath("t")
-                .appendPath("p")
-                .appendPath("w185")
-                .appendEncodedPath(posterPath)
-                .build();
+        Uri imageURL = movieListing.getPosterUri();
 
         Picasso.with(context).load(imageURL).into(imageView);
 

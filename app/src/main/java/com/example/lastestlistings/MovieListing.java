@@ -1,5 +1,7 @@
 package com.example.lastestlistings;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 /**
@@ -50,6 +52,22 @@ public class MovieListing implements Serializable {
 
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+
+    public Uri getPosterUri() {
+        return getPosterUri(false);
+    }
+
+    public Uri getPosterUri(boolean fullSize) {
+        return new Uri.Builder()
+                .scheme("http")
+                .authority("image.tmdb.org")
+                .appendPath("t")
+                .appendPath("p")
+                .appendPath(fullSize ? "w500" : "w185")
+                .appendEncodedPath(getPosterPath())
+                .build();
     }
 
 

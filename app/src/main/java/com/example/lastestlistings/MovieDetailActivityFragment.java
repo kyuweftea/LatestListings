@@ -33,37 +33,19 @@ public class MovieDetailActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
 
         if (intent != null && intent.hasExtra(MovieDetailActivity.movieListingKEY)) {
-            MovieListing movieListing = (MovieListing) intent
-                    .getSerializableExtra(MovieDetailActivity.movieListingKEY);
-
-            final Uri imageURLsmall = new Uri.Builder()
-                    .scheme("http")
-                    .authority("image.tmdb.org")
-                    .appendPath("t")
-                    .appendPath("p")
-                    .appendPath("w185")
-                    .appendEncodedPath(movieListing.getPosterPath())
-                    .build();
-
-            final Uri imageURL = new Uri.Builder()
-                    .scheme("http")
-                    .authority("image.tmdb.org")
-                    .appendPath("t")
-                    .appendPath("p")
-                    .appendPath("w500")
-                    .appendEncodedPath(movieListing.getPosterPath())
-                    .build();
 
             final Context context = getActivity();
             final ImageView imageView = (ImageView) rootView.findViewById(R.id.poster);
+            final MovieListing movieListing = (MovieListing) intent
+                    .getSerializableExtra(MovieDetailActivity.movieListingKEY);
 
             Picasso.with(context)
-                    .load(imageURLsmall) // thumbnail url goes here
+                    .load(movieListing.getPosterUri()) // thumbnail url goes here
                     .into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {
                             Picasso.with(context)
-                                    .load(imageURL) // image url goes here
+                                    .load(movieListing.getPosterUri(true)) // image url goes here
                                     .placeholder(imageView.getDrawable())
                                     .into(imageView);
                         }
