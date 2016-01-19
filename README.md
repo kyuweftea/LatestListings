@@ -1,5 +1,9 @@
 # LatestListings
+
 A movie discovery app as part of the "Developing Android Apps" course on Udacity.
+
+<img src="latestlistings_screenshot_1.png" width="35%">
+<img src="latestlistings_screenshot_2.png" width="35%">
 
 To use this app, you must create the following resource file:
 app/src/main/res/values/secrets.xml
